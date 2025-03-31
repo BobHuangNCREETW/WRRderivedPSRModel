@@ -3,36 +3,37 @@ function [pre_S5_PSR,Tar_Vs_TopUC,Tar_Depth_TopUC]=sub_WRR_derived_PSRmodel(Tar_
 %     Width-Rupture-ratio (WRR) derived Probabilistic model of surface rupture (PSR)
 %     *****Inputs*****
 %     Tar_Lon:      Epicenter longitude; Tar_Lat: Epicenter latitute. (degree)
-%     WRR:          Width-Rupture-ratio, calculated as the rupture width (W_{Rup}) 
-%                   divided by thefault width (W_{Flt}), the W_{Rup} could be 
-%                   adopted from empirical source scaling model considering 
-%                   width-limit effect (e.g., Huang et al., SRL, 95, 2352-2367, 
-%                   2024).
-%     NZbor:        The normalized depth of the bottom of the fault rupture within 
+%     WRR:          The Width-Rupture-ratio is defined as the rupture width (W_{Rup}) 
+%                   divided by the fault width (W_{Flt}). It can utilize the W_{Rup} 
+%                   from an empirical scaling model that incorporates the width-limit 
+%                   effect (for example, Huang et al., SRL, 95, 2352-2367, 2024).
+%     NZbor:        The normalized depth of the bottom of the fault rupture within
 %                   the seismogenic zone.
-%     Flag_Vs_TUC:  A flag indicating the source of source zone stiffness index Vs, 
-%                   in which 1= Grab the Vs at Top Upper Crust from Simmons et al. 
-%                   (2015) (default), and 0= Customized the given Vs at Top Upper 
-%                   Crust, e.g. manual_Vs_TUC=3.5 km/s.
-%                   The [Vs_TUC] (km/s) value are defaulting grabed in
-%                   "Global_Vs_Structure_grab_from_LLNL_G3D_JPS_by_Sea15.mat",
-%                   which is reformatted from LLNL_G3D_JPS.Interpolated files from
-%                   https://gs.llnl.gov/nuclear-threat-reduction/nuclear-explosion-monitoring/global-3d-seismic-tomography
-%                   Info can be find in Simmons et al. (GRL, 42(21), 9270-9278, 2015)
+%     Flag_Vs_TUC:  A flag indicating the source of the source zone stiffness index Vs, 
+%                   where 1 represents using the Vs at the Top Upper Crust from Simmons 
+%                   et al. (2015) (default), and 0 indicates customizing the given Vs at 
+%                   the Top Upper Crust, for example, manual_Vs_TUC=3.5 km/s. The [Vs_TUC] 
+%                   (km/s) values are defaulted as grabbed from 
+%                   "Global_Vs_Structure_grab_from_LLNL_G3D_JPS_by_Sea15.mat," which is 
+%                   reformatted from LLNL_G3D_JPS.Interpolated files from 
+%                   https://gs.llnl.gov/nuclear-threat-reduction/nuclear-explosion-monitoring/global-3d-seismic-tomography. 
+%                   More information can be found in Simmons et al. (GRL, 42(21), 
+%                   9270-9278, 2015).
 %     Vs_TUC:       Manual given Vs_{TUC} opporated only if [Flag_Vs_TUC]=0. (km/s)
-%     Asp:          Seismic fault aspect ratio, calculated as rupture length divided
-%                   by rupture width, could be obtained by empirical source scaling 
-%                   model considering width-limit effect (e.g., Huang et al., SRL, 
-%                   95, 2352-2367, 2024).
+%     Asp:          The seismic fault aspect ratio, defined as the rupture length divided 
+%                   by the rupture width can be obtained using an empirical source scaling 
+%                   model that considers the width-limit effect (e.g., Huang et al., SRL, 95, 
+%                   2352-2367, 2024).
 %     rake:         Rupture rake angle.
 %     *****Outputs*****
 %     pre_S5_PSR:      Probability of surface rupture derived on the stage 5 model 
 %                      provided in this study (Huang and Abrahamson, submitted)
-%     Tar_Vs_TopUC:    The epicenter location's [Vs_TUC] (km/s) value grabed in 
+%     Tar_Vs_TopUC:    The epicenter location's [Vs_TUC] (km/s) value grabbed in 
 %                      Simmons et al. (GRL, 42(21), 9270-9278, 2015)
-%     Tar_Depth_TopUC: The depth of the location of [Vs_TUC] is grabbed in 
-%                      Simmons et al. (GRL, 42(21), 9270-9278, 2015)
-%                      These two values will obtained inly if [Flag_Vs_TUC]=1. 
+%     Tar_Depth_TopUC: The depth of the location of [Vs_TUC] is grabbed in Simmons et 
+%                      al. (GRL, 42(21), 9270-9278, 2015). 
+%                      These two values will be obtained only if [Flag_Vs_TUC]=1. 
+%
 %                                           by Bob J.Y. Huang 2025.03.31
 %%%%%%
 load Global_Vs_Structure_grab_from_LLNL_G3D_JPS_by_Sea15.mat; 
@@ -64,7 +65,7 @@ c3=2.8917;
 % Functional forms of logistic regression
 S3_y=c0+c1*WRR+c2*NZbor+c3*Tar_Vs_TopUC;
 pre_S3_PSR=(exp(S3_y))/(1+(exp(S3_y)));
-% Functional forms for the Width limit term conducted from fault aspect ratio
+% Functional forms for the Width limit term conducted from the fault aspect ratio
 c4=-0.1242; 
 c5=0.067; 
 c6=0.2172; 
@@ -76,7 +77,7 @@ elseif(Asp>=Asp_end)
 end
 % Style of Faulting term for normal (NML) fault only
 %% classify style of fault by rake angles follows Ancheta et al. 2013 (see table 4.4 in PEER report 2020/02
-%  "Mechanism"      Rake angles                  abbriviation
+%  "Mechanism"      Rake angles                  abbreviations
 %  Strike-Slip      -180~-150; -30~30; 150~180   SS
 %  Normal           -150~-30                     N
 %  Reverse           30~150                      R
