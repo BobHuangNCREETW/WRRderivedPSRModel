@@ -66,8 +66,8 @@ c3=2.8917;
 S3_y=c0+c1*WRR+c2*NZbor+c3*Tar_Vs_TopUC;
 pre_S3_PSR=(exp(S3_y))/(1+(exp(S3_y)));
 % Functional forms for the Width limit term conducted from the fault aspect ratio
-c4=-0.1242; 
-c5=0.067; 
+c4=-0.1297; 
+c5=0.0701; 
 c6=0.2172; 
 Asp_start=0;Asp_end=5;
 if(Asp>Asp_start&Asp<Asp_end)
@@ -81,7 +81,7 @@ end
 %  Strike-Slip      -180~-150; -30~30; 150~180   SS
 %  Normal           -150~-30                     N
 %  Reverse           30~150                      R
-c7=0.1708;
+c7=0.1713;
 if(rake>=-150&rake<-30)
   pre_S5_PSR=pre_S3_PSR+f1_Asp+c7;
 else
