@@ -20,6 +20,7 @@ function [Vs_TopUC,Depth_TopUC]=sub_getVs_TUC(Tar_Lon,Tar_Lat,Geodetic_longitude
 %      file.
 %    The reason to keep it complex for whole Vs structure is in case there are needs 
 %      for results of other layers.
+%                                           by Bob J.Y. Huang 2025.03.31
 %----
 diff_x=abs(Geodetic_longitude-Tar_Lon);
 diff_y=abs(Geodetic_latitute-Tar_Lat);
